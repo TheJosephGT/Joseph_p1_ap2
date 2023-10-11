@@ -3,7 +3,7 @@ package com.example.primerparcial.data.local.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Dividir")
+@Entity(tableName = "Divisores")
 data class Dividir (
     @PrimaryKey
     val dividirId:Int?=null,

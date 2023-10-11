@@ -3,7 +3,6 @@ package com.example.primerparcial.di
 import android.content.Context
 import androidx.room.Room
 import com.example.primerparcial.data.Database
-import com.example.primerparcial.data.repository.CounterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +22,5 @@ object AppModule {
             "Database.db"
         ).fallbackToDestructiveMigration().build()
     @Provides
-    fun providePreferences(@ApplicationContext context: Context) = CounterRepository(context)
+    fun provideDividir(db : Database) = db.DividirDao()
 }

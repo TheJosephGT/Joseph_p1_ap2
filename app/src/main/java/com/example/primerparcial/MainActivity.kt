@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.primerparcial.ui.Dividir.ScreenDividir
 import com.example.primerparcial.ui.counter.CounterScreen
 import com.example.primerparcial.ui.counter.CounterViewModel
 import com.example.primerparcial.ui.theme.PrimerParcialTheme
@@ -29,12 +30,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel: CounterViewModel =  hiltViewModel()
-                    val counter by viewModel.counter.collectAsState(0)
-                    CounterScreen(
-                        counter = counter,
-                        onIncrement = viewModel::increment
-                    )
+
                 }
             }
         }

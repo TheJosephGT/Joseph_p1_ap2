@@ -10,5 +10,5 @@ import com.example.primerparcial.data.local.entities.Dividir
     version = 1
 )
 abstract class Database : RoomDatabase() {
-    abstract suspend fun DividirDao() : DividirDao
+    abstract fun DividirDao() : DividirDao
 }
