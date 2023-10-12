@@ -63,6 +63,11 @@ class DividirViewModel @Inject constructor(
         CocienteError = Cociente > 0
         ResiduoError = Residuo > -1
 
+        if(Divisor > Dividendo){
+            InvalidDivisor = "El divisor es mayor que el dividendo"
+            return false
+        }
+
         VerificarDividendo = Cociente * Divisor
         VerificarDividendo += Residuo
 
@@ -85,6 +90,8 @@ class DividirViewModel @Inject constructor(
         }
 
         return !(Nombre == "" || Dividendo <= 0 || Divisor <= 0 || Cociente <= 0 || Residuo < 0 || !DivisionEfectuada)
+
+
     }
 
     fun save(){
@@ -113,6 +120,10 @@ class DividirViewModel @Inject constructor(
         Divisor = 0
         Cociente = 0
         Residuo = 0
+        InvalidDividendo = ""
+        InvalidDivisor = ""
+        InvalidCociente = ""
+        InvalidResiduo = ""
     }
 
 

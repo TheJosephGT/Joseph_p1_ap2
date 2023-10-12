@@ -101,10 +101,12 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
                 )
-                if (!viewModel.DividendoError) {
+                if (!viewModel.DividendoError)
                     Text(text = "El dividendo es un campo requerido", color = Color.Red)
-                }
-                Text(text = viewModel.InvalidDividendo, color = Color.Red)
+
+                if(viewModel.InvalidDividendo != "")
+                    Text(text = viewModel.InvalidDividendo, color = Color.Red)
+
             }
 
             Spacer(modifier = Modifier.width(30.dp))
@@ -125,10 +127,12 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
                 )
-                if (!viewModel.DivisorError) {
+                if (!viewModel.DivisorError)
                     Text(text = "El divisor es un campo requerido", color = Color.Red)
-                }
-                Text(text = viewModel.InvalidDivisor, color = Color.Red)
+
+                if(viewModel.InvalidDivisor != "")
+                    Text(text = viewModel.InvalidDivisor, color = Color.Red)
+
             }
         }
 
@@ -152,10 +156,11 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
                 )
-                if (!viewModel.CocienteError) {
+                if (!viewModel.CocienteError)
                     Text(text = "El cociente es un campo requerido", color = Color.Red)
-                }
-                Text(text = viewModel.InvalidCociente, color = Color.Red)
+                if(viewModel.InvalidCociente != "")
+                    Text(text = viewModel.InvalidCociente, color = Color.Red)
+
             }
 
             Spacer(modifier = Modifier.width(30.dp))
@@ -177,10 +182,10 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
                 )
-                if (!viewModel.ResiduoError) {
+                if (!viewModel.ResiduoError)
                     Text(text = "El residuo es un campo requerido", color = Color.Red)
-                }
-                Text(text = viewModel.InvalidResiduo, color = Color.Red)
+                if(viewModel.InvalidResiduo != "")
+                    Text(text = viewModel.InvalidResiduo, color = Color.Red)
             }
         }
 
