@@ -38,6 +38,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -63,7 +64,6 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-
             .padding(8.dp)
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
@@ -99,7 +99,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.Dividendo = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
                 if (!viewModel.DividendoError)
                     Text(text = "El dividendo es un campo requerido", color = Color.Red)
@@ -125,7 +125,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.Divisor = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
                 if (!viewModel.DivisorError)
                     Text(text = "El divisor es un campo requerido", color = Color.Red)
@@ -154,7 +154,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.Cociente = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
                 if (!viewModel.CocienteError)
                     Text(text = "El cociente es un campo requerido", color = Color.Red)
@@ -180,7 +180,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.Residuo = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
                 if (!viewModel.ResiduoError)
                     Text(text = "El residuo es un campo requerido", color = Color.Red)
