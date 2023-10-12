@@ -22,9 +22,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,8 +51,8 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
-        viewModel.isMessageShownFlow.collectLatest {
-            if (it) {
+        viewModel.isMessageShownFlow.collectLatest { showMessage ->
+            if (showMessage) {
                 snackbarHostState.showSnackbar(
                     message = "Division efectuada con exito",
                     duration = SnackbarDuration.Long
@@ -57,10 +60,10 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
             }
         }
     }
-
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+
             .padding(8.dp)
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
@@ -85,7 +88,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                 modifier = Modifier
                     .weight(1f)
                     .padding(8.dp)
-            ){
+            ) {
                 OutlinedTextField(
                     value = viewModel.Dividendo.toString(),
                     label = { Text(text = "Dividendo") },
@@ -101,6 +104,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                 if (!viewModel.DividendoError) {
                     Text(text = "El dividendo es un campo requerido", color = Color.Red)
                 }
+                Text(text = viewModel.InvalidDividendo, color = Color.Red)
             }
 
             Spacer(modifier = Modifier.width(30.dp))
@@ -124,6 +128,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                 if (!viewModel.DivisorError) {
                     Text(text = "El divisor es un campo requerido", color = Color.Red)
                 }
+                Text(text = viewModel.InvalidDivisor, color = Color.Red)
             }
         }
 
@@ -150,6 +155,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                 if (!viewModel.CocienteError) {
                     Text(text = "El cociente es un campo requerido", color = Color.Red)
                 }
+                Text(text = viewModel.InvalidCociente, color = Color.Red)
             }
 
             Spacer(modifier = Modifier.width(30.dp))
@@ -164,7 +170,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     label = { Text(text = "Residuo") },
                     singleLine = true,
                     onValueChange = {
-                        val newValue = it.toDoubleOrNull()
+                        val newValue = it.toIntOrNull()
                         if (newValue != null) {
                             viewModel.Residuo = newValue
                         }
@@ -174,6 +180,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                 if (!viewModel.ResiduoError) {
                     Text(text = "El residuo es un campo requerido", color = Color.Red)
                 }
+                Text(text = viewModel.InvalidResiduo, color = Color.Red)
             }
         }
 
@@ -194,6 +201,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
         Consult(divisores)
     }
 }
+
 
 @Composable
 fun Consult(divisiones: List<Dividir>) {

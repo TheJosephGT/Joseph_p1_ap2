@@ -11,5 +11,5 @@ data class Dividir (
     var dividendo:Int?=null,
     var divisor:Int?=null,
     var cociente:Int?=null,
-    var residuo:Double?=null
+    var residuo:Int?=null
 )

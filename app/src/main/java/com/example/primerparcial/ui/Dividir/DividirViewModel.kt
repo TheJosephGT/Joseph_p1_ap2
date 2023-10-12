@@ -24,7 +24,7 @@ class DividirViewModel @Inject constructor(
     var Dividendo by mutableStateOf(0)
     var Divisor by mutableStateOf(0)
     var Cociente by mutableStateOf(0)
-    var Residuo by mutableStateOf(0.0)
+    var Residuo by mutableStateOf(0)
 
     var NombreError by mutableStateOf(true)
     var DividendoError by mutableStateOf(true)
@@ -32,6 +32,12 @@ class DividirViewModel @Inject constructor(
     var CocienteError by mutableStateOf(true)
     var ResiduoError by mutableStateOf(true)
     var DivisionEfectuada by mutableStateOf(true)
+
+    var InvalidDividendo by mutableStateOf("")
+    var InvalidDivisor by mutableStateOf("")
+    var InvalidCociente by mutableStateOf("")
+    var InvalidResiduo by mutableStateOf("")
+
 
     var Divisores : StateFlow<List<Dividir>> = repository.getAll().stateIn(
         scope = viewModelScope,
@@ -49,16 +55,36 @@ class DividirViewModel @Inject constructor(
     }
 
     fun Validar() : Boolean{
+        var VerificarDividendo:Int?=null
+
         NombreError = Nombre.isNotEmpty()
         DividendoError = Dividendo > 0
         DivisorError = Divisor > 0
         CocienteError = Cociente > 0
-        ResiduoError = Residuo > 0.0
+        ResiduoError = Residuo > -1
 
+        VerificarDividendo = Cociente * Divisor
+        VerificarDividendo += Residuo
 
+        DivisionEfectuada = VerificarDividendo == Dividendo
 
+        if(VerificarDividendo == Dividendo){
+            DivisionEfectuada = true
+        }else{
+            var resultado:Int
 
-        return !(Nombre == "" || Dividendo == 0 || Divisor == 0 || Cociente == 0 || Residuo == 0.0)
+            resultado = Dividendo / Divisor
+
+            if(resultado != Cociente)
+                InvalidCociente = "El cociente tiene un valor incorrecto"
+
+            resultado = Dividendo % Divisor
+
+            if(resultado != Residuo)
+                InvalidResiduo = "El residuo tiene un valor incorrecto"
+        }
+
+        return !(Nombre == "" || Dividendo <= 0 || Divisor <= 0 || Cociente <= 0 || Residuo < 0 || !DivisionEfectuada)
     }
 
     fun save(){
@@ -86,7 +112,7 @@ class DividirViewModel @Inject constructor(
         Dividendo = 0
         Divisor = 0
         Cociente = 0
-        Residuo = 0.0
+        Residuo = 0
     }
 
 
