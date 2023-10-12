@@ -57,25 +57,36 @@ class DividirViewModel @Inject constructor(
     fun Validar() : Boolean{
         var VerificarDividendo:Int?=null
 
+        //Verificamos si estan vacios algunos de los campos.
         NombreError = Nombre.isNotEmpty()
         DividendoError = Dividendo > 0
         DivisorError = Divisor > 0
         CocienteError = Cociente > 0
         ResiduoError = Residuo > -1
+        if(Divisor <= 0){
+            DivisorError = false
+            return false
+        }else{
+            DivisorError = true
+        }
 
+
+        //Antes de empezar a calcular, verificamos que el divisor NO sea mayor que el dividendo.
         if(Divisor > Dividendo){
             InvalidDivisor = "El divisor es mayor que el dividendo"
             return false
         }
 
+        //Cumplidos ya las validaciones anteriores, verificamos cual deberia ser el resultado de la division.
         VerificarDividendo = Cociente * Divisor
         VerificarDividendo += Residuo
-
         DivisionEfectuada = VerificarDividendo == Dividendo
 
+        //Lo igualamos al dividendo, si son iguales Division efectuada sera true y seguira al return de la linea 102.
         if(VerificarDividendo == Dividendo){
             DivisionEfectuada = true
         }else{
+            //Si la condicion no se cumple, calculamos el cociente y el residuo para evaluar cuales son los datos erroneos en la division
             var resultado:Int
 
             resultado = Dividendo / Divisor
