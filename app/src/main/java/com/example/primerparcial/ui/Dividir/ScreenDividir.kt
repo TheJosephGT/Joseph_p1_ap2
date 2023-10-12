@@ -52,7 +52,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
             if (it) {
                 snackbarHostState.showSnackbar(
                     message = "Division efectuada con exito",
-                    duration = SnackbarDuration.Short
+                    duration = SnackbarDuration.Long
                 )
             }
         }
@@ -81,69 +81,100 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Row {
-            OutlinedTextField(
-                modifier = Modifier.weight(1f),
-                value = viewModel.Dividendo.toString(),
-                label = { Text(text = "Dividendo") },
-                singleLine = true,
-                onValueChange = {
-                    val newValue = it.toIntOrNull()
-                    if (newValue != null) {
-                        viewModel.Dividendo = newValue
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp)
+            ){
+                OutlinedTextField(
+                    value = viewModel.Dividendo.toString(),
+                    label = { Text(text = "Dividendo") },
+                    singleLine = true,
+                    onValueChange = {
+                        val newValue = it.toIntOrNull()
+                        if (newValue != null) {
+                            viewModel.Dividendo = newValue
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                )
+                if (!viewModel.DividendoError) {
+                    Text(text = "El dividendo es un campo requerido", color = Color.Red)
+                }
+            }
 
             Spacer(modifier = Modifier.width(30.dp))
-
-            OutlinedTextField(
-                modifier = Modifier.weight(1f),
-                value = viewModel.Divisor.toString(),
-                label = { Text(text = "Divisor") },
-                singleLine = true,
-                onValueChange = {
-                    val newValue = it.toIntOrNull()
-                    if (newValue != null) {
-                        viewModel.Divisor = newValue
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp)
+            ) {
+                OutlinedTextField(
+                    value = viewModel.Divisor.toString(),
+                    label = { Text(text = "Divisor") },
+                    singleLine = true,
+                    onValueChange = {
+                        val newValue = it.toIntOrNull()
+                        if (newValue != null) {
+                            viewModel.Divisor = newValue
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                )
+                if (!viewModel.DivisorError) {
+                    Text(text = "El divisor es un campo requerido", color = Color.Red)
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Row {
-            OutlinedTextField(
-                modifier = Modifier.weight(1f),
-                value = viewModel.Cociente.toString(),
-                label = { Text(text = "Cociente") },
-                singleLine = true,
-                onValueChange = {
-                    val newValue = it.toIntOrNull()
-                    if (newValue != null) {
-                        viewModel.Cociente = newValue
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp)
+            ) {
+                OutlinedTextField(
+                    value = viewModel.Cociente.toString(),
+                    label = { Text(text = "Cociente") },
+                    singleLine = true,
+                    onValueChange = {
+                        val newValue = it.toIntOrNull()
+                        if (newValue != null) {
+                            viewModel.Cociente = newValue
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                )
+                if (!viewModel.CocienteError) {
+                    Text(text = "El cociente es un campo requerido", color = Color.Red)
+                }
+            }
 
             Spacer(modifier = Modifier.width(30.dp))
 
-            OutlinedTextField(
-                modifier = Modifier.weight(1f),
-                value = viewModel.Residuo.toString(),
-                label = { Text(text = "Residuo") },
-                singleLine = true,
-                onValueChange = {
-                    val newValue = it.toDoubleOrNull()
-                    if (newValue != null) {
-                        viewModel.Residuo = newValue
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp)
+            ) {
+                OutlinedTextField(
+                    value = viewModel.Residuo.toString(),
+                    label = { Text(text = "Residuo") },
+                    singleLine = true,
+                    onValueChange = {
+                        val newValue = it.toDoubleOrNull()
+                        if (newValue != null) {
+                            viewModel.Residuo = newValue
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                )
+                if (!viewModel.ResiduoError) {
+                    Text(text = "El residuo es un campo requerido", color = Color.Red)
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -228,3 +259,6 @@ fun ItemConsult(dividir: Dividir, viewModel: DividirViewModel = hiltViewModel())
         }
     }
 }
+
+
+
