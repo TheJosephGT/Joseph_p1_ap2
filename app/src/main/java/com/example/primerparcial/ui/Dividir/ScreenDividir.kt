@@ -33,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,7 +43,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()){
+fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
     val divisores by viewModel.Divisores.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -61,18 +62,21 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()){
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
-    ){
+    ) {
         val keyboardController = LocalSoftwareKeyboardController.current
 
         Text(text = "Aprende a dividir", style = MaterialTheme.typography.titleLarge)
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = viewModel.Nombre,
-            label = { Text(text = "Nombre")},
+            label = { Text(text = "Nombre") },
             singleLine = true,
-            onValueChange = {viewModel.Nombre = it},
+            onValueChange = { viewModel.Nombre = it },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
         )
+        if (!viewModel.NombreError) {
+            Text(text = "El nombre es un campo requerido", color = Color.Red)
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -80,30 +84,32 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()){
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
                 value = viewModel.Dividendo.toString(),
-                label = { Text(text = "Dividendo")},
+                label = { Text(text = "Dividendo") },
                 singleLine = true,
                 onValueChange = {
                     val newValue = it.toIntOrNull()
-                    if(newValue != null){
+                    if (newValue != null) {
                         viewModel.Dividendo = newValue
                     }
                 },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next))
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+            )
 
             Spacer(modifier = Modifier.width(30.dp))
 
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
                 value = viewModel.Divisor.toString(),
-                label = { Text(text = "Divisor")},
+                label = { Text(text = "Divisor") },
                 singleLine = true,
                 onValueChange = {
                     val newValue = it.toIntOrNull()
-                    if(newValue != null){
+                    if (newValue != null) {
                         viewModel.Divisor = newValue
                     }
                 },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next))
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+            )
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -112,30 +118,32 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()){
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
                 value = viewModel.Cociente.toString(),
-                label = { Text(text = "Cociente")},
+                label = { Text(text = "Cociente") },
                 singleLine = true,
                 onValueChange = {
                     val newValue = it.toIntOrNull()
-                    if(newValue != null){
+                    if (newValue != null) {
                         viewModel.Cociente = newValue
                     }
                 },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next))
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+            )
 
             Spacer(modifier = Modifier.width(30.dp))
 
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
                 value = viewModel.Residuo.toString(),
-                label = { Text(text = "Residuo")},
+                label = { Text(text = "Residuo") },
                 singleLine = true,
                 onValueChange = {
                     val newValue = it.toDoubleOrNull()
-                    if(newValue != null){
+                    if (newValue != null) {
                         viewModel.Residuo = newValue
                     }
                 },
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next))
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+            )
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -144,6 +152,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()){
             keyboardController?.hide()
             if (viewModel.Validar()) {
                 viewModel.save()
+                viewModel.setMessageShown()
             }
         }, modifier = Modifier.fillMaxWidth())
         {
@@ -187,14 +196,26 @@ fun ItemConsult(dividir: Dividir, viewModel: DividirViewModel = hiltViewModel())
         ) {
             Text(text = "Nombre: ${dividir.nombre}", style = MaterialTheme.typography.titleMedium)
             Row {
-                Text(text = "Dividendo: ${dividir.dividendo.toString()}", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = "Dividendo: ${dividir.dividendo.toString()}",
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Spacer(modifier = Modifier.width(30.dp))
-                Text(text = "Divisor: ${dividir.divisor.toString()}", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = "Divisor: ${dividir.divisor.toString()}",
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
-            Row{
-                Text(text = "Cociente: ${dividir.cociente.toString()}", style = MaterialTheme.typography.titleMedium)
+            Row {
+                Text(
+                    text = "Cociente: ${dividir.cociente.toString()}",
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Spacer(modifier = Modifier.width(30.dp))
-                Text(text = "Residuo: ${dividir.residuo.toString()}", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = "Residuo: ${dividir.residuo.toString()}",
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
 
             Button(

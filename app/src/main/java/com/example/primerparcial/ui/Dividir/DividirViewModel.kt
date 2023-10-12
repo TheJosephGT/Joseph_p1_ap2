@@ -49,7 +49,8 @@ class DividirViewModel @Inject constructor(
     }
 
     fun Validar() : Boolean{
-        return true;
+
+        return !(Nombre == "" || Dividendo == 0 || Divisor == 0 || Cociente == 0 || Residuo == 0.0)
     }
 
     fun save(){
