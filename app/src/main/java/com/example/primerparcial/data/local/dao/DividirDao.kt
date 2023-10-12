@@ -5,12 +5,13 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.example.primerparcial.data.local.entities.Dividir
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DividirDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun save(dividir: Dividir)
 
     @Query(
