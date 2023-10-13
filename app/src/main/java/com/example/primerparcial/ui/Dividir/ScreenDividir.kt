@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,12 +21,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.primerparcial.data.local.entities.Dividir
@@ -48,7 +43,7 @@ import kotlinx.coroutines.flow.collectLatest
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
-    val divisores by viewModel.Divisores.collectAsState()
+    val divisores by viewModel.divisores.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
@@ -71,13 +66,13 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
         Text(text = "Aprende a dividir", style = MaterialTheme.typography.titleLarge)
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = viewModel.Nombre,
+            value = viewModel.nombre,
             label = { Text(text = "Nombre") },
             singleLine = true,
-            onValueChange = { viewModel.Nombre = it },
+            onValueChange = { viewModel.nombre = it },
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
         )
-        if (!viewModel.NombreError) {
+        if (!viewModel.nombreError) {
             Text(text = "El nombre es un campo requerido", color = Color.Red)
         }
 
@@ -90,22 +85,22 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     .padding(8.dp)
             ) {
                 OutlinedTextField(
-                    value = viewModel.Dividendo.toString(),
+                    value = viewModel.dividendo.toString(),
                     label = { Text(text = "Dividendo") },
                     singleLine = true,
                     onValueChange = {
                         val newValue = it.toIntOrNull()
                         if (newValue != null) {
-                            viewModel.Dividendo = newValue
+                            viewModel.dividendo = newValue
                         }
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
-                if (!viewModel.DividendoError)
+                if (!viewModel.dividendoError)
                     Text(text = "El dividendo es un campo requerido", color = Color.Red)
 
-                if(viewModel.InvalidDividendo != "")
-                    Text(text = viewModel.InvalidDividendo, color = Color.Red)
+                if(viewModel.invalidDividendo != "")
+                    Text(text = viewModel.invalidDividendo, color = Color.Red)
 
             }
 
@@ -116,22 +111,22 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     .padding(8.dp)
             ) {
                 OutlinedTextField(
-                    value = viewModel.Divisor.toString(),
+                    value = viewModel.divisor.toString(),
                     label = { Text(text = "Divisor") },
                     singleLine = true,
                     onValueChange = {
                         val newValue = it.toIntOrNull()
                         if (newValue != null) {
-                            viewModel.Divisor = newValue
+                            viewModel.divisor = newValue
                         }
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
-                if (!viewModel.DivisorError)
+                if (!viewModel.divisorError)
                     Text(text = "El divisor es un campo requerido", color = Color.Red)
 
-                if(viewModel.InvalidDivisor != "")
-                    Text(text = viewModel.InvalidDivisor, color = Color.Red)
+                if(viewModel.invalidDivisor != "")
+                    Text(text = viewModel.invalidDivisor, color = Color.Red)
 
             }
         }
@@ -145,21 +140,21 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     .padding(8.dp)
             ) {
                 OutlinedTextField(
-                    value = viewModel.Cociente.toString(),
+                    value = viewModel.cociente.toString(),
                     label = { Text(text = "Cociente") },
                     singleLine = true,
                     onValueChange = {
                         val newValue = it.toIntOrNull()
                         if (newValue != null) {
-                            viewModel.Cociente = newValue
+                            viewModel.cociente = newValue
                         }
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
-                if (!viewModel.CocienteError)
+                if (!viewModel.cocienteError)
                     Text(text = "El cociente es un campo requerido", color = Color.Red)
-                if(viewModel.InvalidCociente != "")
-                    Text(text = viewModel.InvalidCociente, color = Color.Red)
+                if(viewModel.invalidCociente != "")
+                    Text(text = viewModel.invalidCociente, color = Color.Red)
 
             }
 
@@ -171,21 +166,21 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                     .padding(8.dp)
             ) {
                 OutlinedTextField(
-                    value = viewModel.Residuo.toString(),
+                    value = viewModel.residuo.toString(),
                     label = { Text(text = "Residuo") },
                     singleLine = true,
                     onValueChange = {
                         val newValue = it.toIntOrNull()
                         if (newValue != null) {
-                            viewModel.Residuo = newValue
+                            viewModel.residuo = newValue
                         }
                     },
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                 )
-                if (!viewModel.ResiduoError)
+                if (!viewModel.residuoError)
                     Text(text = "El residuo es un campo requerido", color = Color.Red)
-                if(viewModel.InvalidResiduo != "")
-                    Text(text = viewModel.InvalidResiduo, color = Color.Red)
+                if(viewModel.invalidResiduo != "")
+                    Text(text = viewModel.invalidResiduo, color = Color.Red)
             }
         }
 
@@ -200,7 +195,7 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
         }, modifier = Modifier.fillMaxWidth())
         {
             Icon(imageVector = Icons.Default.CheckCircle, contentDescription = "Guardar")
-            Text(text = "Calcular")
+            Text(text = "Guardar")
         }
 
         Consult(divisores)
