@@ -1,9 +1,13 @@
 package com.example.primerparcial.ui.Dividir
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,8 +18,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +36,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -94,12 +101,15 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.dividendo = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Number
+                    )
                 )
                 if (!viewModel.dividendoError)
                     Text(text = "El dividendo es un campo requerido", color = Color.Red)
 
-                if(viewModel.invalidDividendo != "")
+                if (viewModel.invalidDividendo != "")
                     Text(text = viewModel.invalidDividendo, color = Color.Red)
 
             }
@@ -120,12 +130,15 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.divisor = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Number
+                    )
                 )
                 if (!viewModel.divisorError)
                     Text(text = "El divisor es un campo requerido", color = Color.Red)
 
-                if(viewModel.invalidDivisor != "")
+                if (viewModel.invalidDivisor != "")
                     Text(text = viewModel.invalidDivisor, color = Color.Red)
 
             }
@@ -149,11 +162,14 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.cociente = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Number
+                    )
                 )
                 if (!viewModel.cocienteError)
                     Text(text = "El cociente es un campo requerido", color = Color.Red)
-                if(viewModel.invalidCociente != "")
+                if (viewModel.invalidCociente != "")
                     Text(text = viewModel.invalidCociente, color = Color.Red)
 
             }
@@ -175,11 +191,14 @@ fun ScreenDividir(viewModel: DividirViewModel = hiltViewModel()) {
                             viewModel.residuo = newValue
                         }
                     },
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Number
+                    )
                 )
                 if (!viewModel.residuoError)
                     Text(text = "El residuo es un campo requerido", color = Color.Red)
-                if(viewModel.invalidResiduo != "")
+                if (viewModel.invalidResiduo != "")
                     Text(text = viewModel.invalidResiduo, color = Color.Red)
             }
         }
@@ -210,7 +229,10 @@ fun Consult(divisiones: List<Dividir>) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Text(text = "Historial de resultados", style = MaterialTheme.typography.titleMedium)
+        Row {
+            Text(text = "Historial de resultados", style = MaterialTheme.typography.titleMedium)
+            Icon(imageVector = Icons.Filled.Info, contentDescription = "Info icon")
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -224,16 +246,24 @@ fun Consult(divisiones: List<Dividir>) {
 
 @Composable
 fun ItemConsult(dividir: Dividir, viewModel: DividirViewModel = hiltViewModel()) {
-    Card(
-        modifier = Modifier
+    Divider(
+        Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(horizontal = 8.dp))
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterStart),
             verticalArrangement = Arrangement.spacedBy(8.dp)
+
         ) {
-            Text(text = "Nombre: ${dividir.nombre}", style = MaterialTheme.typography.titleMedium)
+            Text(text = "${dividir.nombre}", style = MaterialTheme.typography.titleMedium)
             Row {
                 Text(
                     text = "Dividendo: ${dividir.dividendo.toString()}",
@@ -256,17 +286,32 @@ fun ItemConsult(dividir: Dividir, viewModel: DividirViewModel = hiltViewModel())
                     style = MaterialTheme.typography.titleMedium
                 )
             }
+        }
+
+        Column(
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+
+            Text(
+                text = "Delete",
+                modifier = Modifier.padding(8.dp),
+                style = MaterialTheme.typography.bodySmall
+            )
 
             Button(
                 onClick = {
                     viewModel.delete(dividir)
-                }
+                },
+                //modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Icon(imageVector = Icons.Default.Clear, contentDescription = "")
             }
         }
     }
+
+    Spacer(modifier = Modifier.height(16.dp))
 }
+
 
 
 
